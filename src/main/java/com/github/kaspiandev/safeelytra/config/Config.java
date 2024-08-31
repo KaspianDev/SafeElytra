@@ -38,7 +38,7 @@ public class Config {
         }
     }
 
-    public AlgorithmSection getAlgorithmSection() {
+    public AlgorithmSection getAlgorithm() {
         return algorithmSection;
     }
 

@@ -20,6 +20,7 @@ public class AlgorithmManager implements Listener {
     public AlgorithmManager(SafeElytra plugin) {
         this.algorithms = new HashMap<>();
         algorithms.put("distance", new DistanceAlgorithm(plugin));
+        algorithms.put("damage", new DamageAlgorithm(plugin));
         this.playerAlgorithms = new HashMap<>();
     }
 

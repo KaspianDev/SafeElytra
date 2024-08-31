@@ -1,7 +1,7 @@
 package com.github.kaspiandev.safeelytra.algorithm;
 
 import com.github.kaspiandev.safeelytra.SafeElytra;
-import com.github.kaspiandev.safeelytra.algorithm.context.DistanceContext;
+import com.github.kaspiandev.safeelytra.algorithm.context.DamageContext;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -10,9 +10,9 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
 
-public class DistanceAlgorithm extends Algorithm<DistanceContext> {
+public class DamageAlgorithm extends Algorithm<DamageContext> {
 
-    public DistanceAlgorithm(SafeElytra plugin) {
+    public DamageAlgorithm(SafeElytra plugin) {
         super(plugin);
     }
 
@@ -27,8 +27,8 @@ public class DistanceAlgorithm extends Algorithm<DistanceContext> {
         if (chestplate == null || chestplate.getType() != Material.ELYTRA) return;
 
         UUID uuid = player.getUniqueId();
-        DistanceContext context = contexts.computeIfAbsent(uuid, (v) -> new DistanceContext(player));
-        if (context.getBlocksFallen() >= plugin.getConf().getAlgorithm().getType().getDistance().getThreshold()) {
+        DamageContext context = contexts.computeIfAbsent(uuid, (v) -> new DamageContext(player));
+        if (context.getPossibleDamage() >= plugin.getConf().getAlgorithm().getType().getDamage().getThreshold()) {
             context.reset();
             player.setGliding(true);
         } else {

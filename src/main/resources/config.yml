@@ -1,5 +1,11 @@
 algorithm:
-  distance:
-    threshold: 4.0
+  default: distance
+  type:
+    distance:
+      # At which distance should we open elytra
+      threshold: 4.0
+    damage:
+      # At how much potential health should we open elytra
+      threshold: 4 # Two hearts
 
 version: 2

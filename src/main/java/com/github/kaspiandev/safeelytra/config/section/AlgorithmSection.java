@@ -6,15 +6,41 @@ import dev.dejvokep.boostedyaml.block.implementation.Section;
 public class AlgorithmSection {
 
     private final Section algorithmSection;
-    private final Distance distance;
+    private final Type type;
 
     public AlgorithmSection(Config config) {
         this.algorithmSection = config.getDocument().getSection("algorithm");
-        this.distance = new Distance();
+        this.type = new Type();
     }
 
-    public Distance getDistance() {
-        return distance;
+    public Type getType() {
+        return type;
+    }
+
+    public class Type {
+
+        private final Section typeSection;
+        private final Distance distance;
+        private final Damage damage;
+
+        public Type() {
+            this.typeSection = algorithmSection.getSection("type");
+            this.distance = new Distance();
+            this.damage = new Damage();
+        }
+
+        public Distance getDistance() {
+            return distance;
+        }
+
+        public Damage getDamage() {
+            return damage;
+        }
+
+        public Section getTypeSection() {
+            return typeSection;
+        }
+
     }
 
     public class Distance {
@@ -22,11 +48,25 @@ public class AlgorithmSection {
         private final Section distanceSection;
 
         public Distance() {
-            this.distanceSection = algorithmSection.getSection("distance");
+            this.distanceSection = getType().getTypeSection().getSection("distance");
         }
 
         public double getThreshold() {
             return distanceSection.getDouble("threshold");
+        }
+
+    }
+
+    public class Damage {
+
+        private final Section damageSection;
+
+        public Damage() {
+            this.damageSection = getType().getTypeSection().getSection("damage");
+        }
+
+        public int getThreshold() {
+            return damageSection.getInt("threshold");
         }
 
     }

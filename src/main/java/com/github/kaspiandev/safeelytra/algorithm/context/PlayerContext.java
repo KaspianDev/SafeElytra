@@ -17,30 +17,37 @@ public class PlayerContext {
     }
 
     public void fall(Location newLocation) {
+        System.out.println("1");
         if (player.isFlying()) reset();
+        System.out.println("2");
 
         World lastWorld = lastLocation.getWorld();
         assert lastWorld != null;
         World newWorld = newLocation.getWorld();
         assert newWorld != null;
 
-        lastLocation = newLocation;
         if (!lastWorld.equals(newWorld)) {
+            System.out.println("4");
             reset();
             return;
         }
 
         if (!newLocation.getBlock().getType().isAir()) {
+            System.out.println("5");
             reset();
             return;
         }
 
         double yDifference = lastLocation.getY() - newLocation.getY();
+        lastLocation = newLocation;
+        System.out.println("diff " + yDifference);
         if (yDifference < 0) {
+            System.out.println("6");
             reset();
             return;
         }
 
+        System.out.println("7");
         blocksFallen += yDifference;
     }
 

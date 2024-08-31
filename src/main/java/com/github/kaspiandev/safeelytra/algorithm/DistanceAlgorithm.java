@@ -37,10 +37,14 @@ public class DistanceAlgorithm implements Listener {
 
         UUID uuid = player.getUniqueId();
         PlayerContext context = contexts.computeIfAbsent(uuid, (v) -> new PlayerContext(player));
+        System.out.println(context);
+        System.out.println(context.getBlocksFallen());
         if (context.getBlocksFallen() >= DEFAULT_DISTANCE) {
+            System.out.println("good");
             context.reset();
             player.setFlying(true);
         } else {
+            System.out.println("increase");
             context.fall(to);
         }
     }

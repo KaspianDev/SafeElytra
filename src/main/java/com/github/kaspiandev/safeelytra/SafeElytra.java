@@ -1,13 +1,13 @@
 package com.github.kaspiandev.safeelytra;
 
+import com.github.kaspiandev.safeelytra.algorithm.DistanceAlgorithm;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class SafeElytra extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        // Plugin startup logic
-
+        getServer().getPluginManager().registerEvents(new DistanceAlgorithm(), this);
     }
 
     @Override

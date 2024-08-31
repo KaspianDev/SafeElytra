@@ -8,17 +8,17 @@ public class PlayerContext {
 
     private final Player player;
     private Location lastLocation;
-    private boolean isFalling;
-    private int blocksFallen;
+    private double blocksFallen;
 
     public PlayerContext(Player player) {
         this.player = player;
         this.lastLocation = player.getLocation();
-        this.isFalling = false;
         this.blocksFallen = 0;
     }
 
     public void fall(Location newLocation) {
+        if (player.isFlying()) reset();
+
         World lastWorld = lastLocation.getWorld();
         assert lastWorld != null;
         World newWorld = newLocation.getWorld();
@@ -26,10 +26,34 @@ public class PlayerContext {
 
         lastLocation = newLocation;
         if (!lastWorld.equals(newWorld)) {
-            blocksFallen = 0;
-            isFalling = false;
+            reset();
             return;
         }
+
+        if (!newLocation.getBlock().getType().isAir()) {
+            reset();
+            return;
+        }
+
+        double yDifference = lastLocation.getY() - newLocation.getY();
+        if (yDifference < 0) {
+            reset();
+            return;
+        }
+
+        blocksFallen += yDifference;
+    }
+
+    public boolean isFalling() {
+        return blocksFallen > 0;
+    }
+
+    public double getBlocksFallen() {
+        return blocksFallen;
+    }
+
+    public void reset() {
+        blocksFallen = 0;
     }
 
 }

@@ -1,31 +1,19 @@
 package com.github.kaspiandev.safeelytra.algorithm;
 
-import com.github.kaspiandev.safeelytra.algorithm.context.PlayerContext;
+import com.github.kaspiandev.safeelytra.algorithm.context.DistanceContext;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
-public class DistanceAlgorithm implements Listener {
+public class DistanceAlgorithm extends Algorithm<DistanceContext> {
 
     private static final int DEFAULT_DISTANCE = 4;
 
-    private final Map<UUID, PlayerContext> contexts;
-
-    public DistanceAlgorithm() {
-        this.contexts = new HashMap<>();
-    }
-
-    @EventHandler
-    public void onMove(PlayerMoveEvent event) {
+    public void check(PlayerMoveEvent event) {
         Location to = event.getTo();
         if (to == null) return;
 
@@ -36,18 +24,13 @@ public class DistanceAlgorithm implements Listener {
         if (chestplate == null || chestplate.getType() != Material.ELYTRA) return;
 
         UUID uuid = player.getUniqueId();
-        PlayerContext context = contexts.computeIfAbsent(uuid, (v) -> new PlayerContext(player));
+        DistanceContext context = contexts.computeIfAbsent(uuid, (v) -> new DistanceContext(player));
         if (context.getBlocksFallen() >= DEFAULT_DISTANCE) {
             context.reset();
             player.setGliding(true);
         } else {
             context.fall(to);
         }
-    }
-
-    @EventHandler
-    public void onQuit(PlayerQuitEvent event) {
-        contexts.remove(event.getPlayer().getUniqueId());
     }
 
 }

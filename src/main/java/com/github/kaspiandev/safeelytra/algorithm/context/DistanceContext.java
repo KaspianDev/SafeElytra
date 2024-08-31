@@ -4,13 +4,13 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
-public class PlayerContext {
+public class DistanceContext implements Context {
 
     private final Player player;
     private Location lastLocation;
     private double blocksFallen;
 
-    public PlayerContext(Player player) {
+    public DistanceContext(Player player) {
         this.player = player;
         this.lastLocation = player.getLocation();
         this.blocksFallen = 0;

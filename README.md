@@ -1,6 +1,6 @@
 # SafeElytra
 
-SafeElyta is a minecraft plugin that automatically enabled your elytra when
+SafeElytra is a minecraft plugin that automatically enabled your elytra when
 falling to prevent fall damage.
 
 ## Permissions:

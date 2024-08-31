@@ -1,5 +1,6 @@
 package com.github.kaspiandev.safeelytra.algorithm;
 
+import com.github.kaspiandev.safeelytra.SafeElytra;
 import com.github.kaspiandev.safeelytra.algorithm.context.DistanceContext;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -11,7 +12,9 @@ import java.util.UUID;
 
 public class DistanceAlgorithm extends Algorithm<DistanceContext> {
 
-    private static final int DEFAULT_DISTANCE = 4;
+    public DistanceAlgorithm(SafeElytra plugin) {
+        super(plugin);
+    }
 
     public void check(PlayerMoveEvent event) {
         Location to = event.getTo();
@@ -25,7 +28,7 @@ public class DistanceAlgorithm extends Algorithm<DistanceContext> {
 
         UUID uuid = player.getUniqueId();
         DistanceContext context = contexts.computeIfAbsent(uuid, (v) -> new DistanceContext(player));
-        if (context.getBlocksFallen() >= DEFAULT_DISTANCE) {
+        if (context.getBlocksFallen() >= plugin.getConf().getAlgorithmSection().getDistance().getThreshold()) {
             context.reset();
             player.setGliding(true);
         } else {
